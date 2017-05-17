@@ -10,9 +10,10 @@ var Users = require("./models/Users.js");
 var Reviews = require("./models/Reviews.js");
 var Courses = require("./models/Courses.js");
 var api = require("./routes");
-var config = require("./config.js")
+var config = require("./config.js");
 
 var mongoose = require("mongoose");
+var seeder = require("mongoose-seeder");
 
 app.use(jsonParser());
 
@@ -28,6 +29,15 @@ db.on("error", function(err) {
 
 db.once("open", function () {
 	console.log("db connection successful");
+	if(config.initialize) {
+		var data = require('./data/data.json');
+	 
+		seeder.seed(data).then(function(dbData) {
+			console.log("Data initialized successfully")
+		}).catch(function(err) {
+			console.log(err)
+		});
+	};
 });
 	
 // set our port
