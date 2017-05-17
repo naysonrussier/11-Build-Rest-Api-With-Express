@@ -8,7 +8,7 @@ var CoursesSchema = new Schema({
 	title: {type: String, required: true},
 	description: {type: String, required: true},
 	estimatedTime: {type: String},
-	materialsNeeded: {type: String, default: Date.now},
+	materialsNeeded: {type: String},
 	steps: [{stepNumber: {type: Number}, title: {type: String, required: true}, description: {type: String, required: true}}],
 	reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}]
 });
