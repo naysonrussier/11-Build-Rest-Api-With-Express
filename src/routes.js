@@ -34,6 +34,7 @@ router.post("/users", function(req, res, next) {
 							next(err);
 						} else {
 							res.setHeader("Location", "/");
+							res.status(201);
 							res.send({})
 						}
 					});
@@ -58,8 +59,8 @@ router.get("/courses", function(req, res, next) {
 		});
 });
 
-//GET COURSE/:COURSEID require login
-router.get("/course/:courseId", mid.requiresLogin, function(req, res, next) {
+//GET COURSES/:COURSEID require login
+router.get("/courses/:courseId", mid.requiresLogin, function(req, res, next) {
 	Courses.findById(req.params.courseId)
 		.populate({path: 'user', select: 'fullName'})
 		.populate({path: 'reviews', populate: {path: 'user', select: 'fullName'}})
@@ -82,6 +83,7 @@ router.post("/courses", mid.requiresLogin, function(req, res, next) {
 				next(err);
 			} else {
 				res.setHeader("Location", "/");
+				res.status(201);
 				res.send({})
 			}
 		});
@@ -98,6 +100,7 @@ router.put("/courses/:courseId", mid.requiresLogin, function(req, res, next) {
 				next({message: "This course couldn't be found!"});
 			} else {
 				res.setHeader("Location", "/");
+				res.status(204);
 				res.send({})
 			}
 		});
@@ -132,6 +135,7 @@ router.post("/courses/:courseId/reviews", mid.requiresLogin, function(req, res, 
 								next(err);
 							} else {
 								res.setHeader("Location", "/");
+								res.status(201);
 								res.send({});
 							};
 						});
